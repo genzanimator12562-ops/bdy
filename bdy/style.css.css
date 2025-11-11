@@ -1,0 +1,145 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    /* overflow: hidden; <-- यह लाइन हटा दी गयी है */
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: white;
+}
+.scene {
+    /* यह कैंडल और एरर सीन के लिए है */
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* जो सीन 'active' है, सिर्फ वही दिखेगा */
+.scene.active {
+    display: flex;
+}
+
+/* सीन 1: कैंडल */
+#scene-candle h1 {
+    font-size: 100px; /* कैंडल इमोजी बड़ा करने के लिए */
+    margin: 0;
+    /* छोटा सा एनीमेशन */
+    animation: flicker 1s infinite alternate;
+}
+
+#startButton {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#mic-feedback {
+    display: none; /* शुरू में छुपा हुआ */
+    color: #999;
+}
+
+@keyframes flicker {
+    from { text-shadow: 0 0 10px #ffdd00; }
+    to { text-shadow: 0 0 20px #ff8800; }
+}
+
+/* सीन 2: एरर */
+#scene-error {
+    background-color: #000;
+    color: #ffffff; /* ग्रीन एरर टेक्स्ट */
+    font-family: 'Courier New', Courier, monospace;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-y: auto; /* अगर कोड ज़्यादा हो तो स्क्रॉल कर सकें */
+}
+
+#scene-error pre {
+    padding: 20px;
+    white-space: pre-wrap; /* टेक्स्ट को रैप करने के लिए */
+    font-size: 14px;
+    /* टाइपिंग इफ़ेक्ट (CSS) */
+    animation: typing 2s steps(40, end);
+}
+
+/* सीन 3: वीडियो */
+#scene-video {
+    background-color: #000;
+}
+/* === नया कोड === */
+
+/* यह मेन कंटेंट को शुरू में छुपा देगा */
+.hidden {
+    display: none;
+}
+
+/* वीडियो सीन (फुल स्क्रीन) */
+#scene-video {
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+}
+#myVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* टेक्स्ट सीन (Poem) */
+#scene-text {
+    position: relative; /* पंखुड़ियों के लिए ज़रूरी */
+    min-height: 100vh;
+    padding: 100px 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.5em; /* बड़ा टेक्स्ट */
+    line-height: 1.6;
+    background-color: #111;
+    overflow: hidden; /* पंखुड़ियों को बाहर जाने से रोकने के लिए */
+}
+
+/* पंखुड़ियों का कंटेनर */
+#petal-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* ताकि यह क्लिक न हो सके */
+    z-index: 10;
+}
+
+/* एक पंखुड़ी (Petal) */
+.petal {
+    position: absolute;
+    top: -20px; /* स्क्रीन के ऊपर से शुरू */
+    width: 15px;
+    height: 10px;
+    background-color: #ff3366; /* गुलाब का रंग */
+    border-radius: 5px 15px;
+    opacity: 0.8;
+    
+    /* गिरने का एनीमेशन */
+    animation: fall 10s linear infinite;
+}
+
+/* गिरने का एनीमेशन (Keyframes) */
+@keyframes fall {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(100px, 120vh) rotate(360deg); /* नीचे और साइड में गिरेगा */
+        opacity: 0;
+    }
+}
